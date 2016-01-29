@@ -1,0 +1,26 @@
+{
+	"name": "unipa_surveys",
+	"version": "1.0.0",
+	"description": "convert prof PDF sheet to JSON",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"bin": {
+		"unipa-export": "unipa_survey.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FrancisCan/UnipaSurveys.git"
+	},
+	"keywords": [
+    "prof",
+    "unipa"
+  ],
+	"author": "Francesco Cannizzaro",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/FrancisCan/UnipaSurveys/issues"
+	},
+	"homepage": "https://github.com/FrancisCan/UnipaSurveys#readme"
+}
