@@ -1,10 +1,15 @@
 # UnipaSurveys
+![node](https://img.shields.io/node/v/gh-badges.svg) ![unipa](https://img.shields.io/badge/Unipa-JSON-orange.svg)
+
 Convert prof PDF sheet to JSON
 
 ### Install
 ```sh
 $ npm install -g
 ```
+
+### Requirements
+- xpdf (**pdftotext**)
 
 ### Usage
 ```sh
