@@ -108,8 +108,10 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 			no: no[i]
 		};
 
-	// EXPORT FILE
-	var filename = parsed.materia.toLowerCase().replace(/[ -']+/g, "-") + ".json";
+	// CLEAR AND EXPORT FILE
+	fs.unlinkSync(path.replace(".pdf", ".txt"));
+
+	var filename = path.split("scheda_")[1].split(".pdf")[0] + ".json";
 
 	fs.writeFile(filename, JSON.stringify(parsed, null, 4), function() {
 		console.log("\n > " + filename + " generated!");
