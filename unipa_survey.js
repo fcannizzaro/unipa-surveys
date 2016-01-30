@@ -24,7 +24,7 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 		regexNo = /NO ([\d,]+)/g,
 		regexSi = /SI ([\d,]+)/g,
 		regexFirstQuestions = /(.*)\n*DECISAMENTE NO ([\d+,]+)\n*PIU' NO CHE SI ([\d+,]+)\n*PIU' SI CHE NO ([\d+,]+)\n*DECISAMENTE SI ([\d+,]+)/g,
-		regexInfo = /.*Insegnamento (.*)\n*Docente\n*(.*)\n*CFU (.*)\n*[^\d]*(\d+)\n*[^\d]*(\d+)/g;
+		regexInfo = /.*Insegnamento (.*)\n*(?:Modulo\n*.*\n*)*Docente\n*(.*)\n*CFU (.*)\n*[^\d]*(\d+)\n*[^\d]*(\d+)/g;
 
 	// QUESTIONS
 	//  0 - 5    docenza
