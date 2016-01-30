@@ -1,0 +1,118 @@
+{
+	"materia": "sample",
+	"docente": "sample",
+	"cfu": 6,
+	"questionari": 20,
+	"domande": {
+		"docenza": {
+			"GLI ORARI DI SVOLGIMENTO DI LEZIONI, ESERCITAZIONI E ALTRE EVENTUALI ATTIVITÀ DIDATTICHE SONO RISPETTATI": {
+				"decisamente_si": 95.45,
+				"decisamente_no": 0,
+				"piu_si_che_no": 0,
+				"piu_no_che_si": 0
+			},
+			"IL DOCENTE STIMOLA/MOTIVA L'INTERESSE VERSO LA DISCIPLINA": {
+				"decisamente_si": 68.18,
+				"decisamente_no": 0,
+				"piu_si_che_no": 27.27,
+				"piu_no_che_si": 0
+			},
+			"IL DOCENTE ESPONE GLI ARGOMENTI IN MODO CHIARO": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 0,
+				"piu_si_che_no": 18.18,
+				"piu_no_che_si": 0
+			},
+			"LE ATTIVITÀ DIDATTICHE INTEGRATIVE SONO UTILI ALL’APPRENDIMENTO DELLA MATERIA": {
+				"decisamente_si": 68.18,
+				"decisamente_no": 0,
+				"piu_si_che_no": 18.18,
+				"piu_no_che_si": 0
+			},
+			"L'INSEGNAMENTO E' STATO SVOLTO IN MANIERA COERENTE CON QUANTO DICHIARATO SUL SITO WEB DEL CORSO DI STUDIO": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 0,
+				"piu_si_che_no": 9.09,
+				"piu_no_che_si": 0
+			},
+			"IL DOCENTE E' REPERIBILE PER CHIARIMENTI E SPIEGAZIONI": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 0,
+				"piu_si_che_no": 13.64,
+				"piu_no_che_si": 0
+			}
+		},
+		"insegnamento": {
+			"LE CONOSCENZE PRELIMINARI POSSEDUTE SONO RISULTATE SUFFICIENTI PER LA COMPRENSIONE DEGLI ARGOMENTI PREVISTI NEL PROGRAMMA D'ESAME": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 0,
+				"piu_si_che_no": 18.18,
+				"piu_no_che_si": 0
+			},
+			"IL CARICO DI STUDIO DELL'INSEGNAMENTO È PROPORZIONATO AI CREDITI ASSEGNATI": {
+				"decisamente_si": 68.18,
+				"decisamente_no": 4.55,
+				"piu_si_che_no": 22.73,
+				"piu_no_che_si": 0
+			},
+			"IL MATERIALE DIDATTICO E' ADEGUATO PER LO STUDIO DELLA MATERIA": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 4.55,
+				"piu_si_che_no": 13.64,
+				"piu_no_che_si": 0
+			},
+			"LE MODALITA' DI ESAME SONO STATE DEFINITE IN MODO CHIARO": {
+				"decisamente_si": 95.45,
+				"decisamente_no": 0,
+				"piu_si_che_no": 4.55,
+				"piu_no_che_si": 0
+			}
+		},
+		"interesse": {
+			"E' INTERESSATO/A AGLI ARGOMENTI TRATTATI NELL'INSEGNAMENTO": {
+				"decisamente_si": 77.27,
+				"decisamente_no": 0,
+				"piu_si_che_no": 18.18,
+				"piu_no_che_si": 0
+			}
+		},
+		"suggerimenti": {
+			"ALLEGGERIRE IL CARICO DIDATTICO COMPLESSIVO": {
+				"si": 4.55,
+				"no": 77.27
+			},
+			"AUMENTARE L'ATTIVITA' DI SUPPORTO DIDATTICO": {
+				"si": 27.27,
+				"no": 50
+			},
+			"FORNIRE PIU' CONOSCENZE DI BASE": {
+				"si": 22.73,
+				"no": 54.55
+			},
+			"ELIMINARE DAL PROGRAMMA ARGOMENTI GIA' TRATTATI IN ALTRI INSEGNAMENTI": {
+				"si": 4.55,
+				"no": 77.27
+			},
+			"MIGLIORARE IL COORDINAMENTO CON ALTRI INSEGNAMENTI": {
+				"si": 27.27,
+				"no": 45.45
+			},
+			"MIGLIORARE LA QUALITA' DEL MATERIALE DIDATTICO": {
+				"si": 18.18,
+				"no": 50
+			},
+			"FORNIRE IN ANTICIPO IL MATERIALE DIDATTICO": {
+				"si": 40.91,
+				"no": 36.36
+			},
+			"INSERIRE PROVE D’ESAME INTERMEDIE": {
+				"si": 27.27,
+				"no": 31.82
+			},
+			"ATTIVARE INSEGNAMENTI SERALI O NEL FINE SETTIMANA": {
+				"si": 9.09,
+				"no": 77.27
+			}
+		}
+	}
+}

@@ -9,9 +9,11 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 
 	var content = fs.readFileSync(path.replace(".pdf", ".txt"), {
 			encoding: "utf-8"
-		}).toString().replace(/\(.*\)/g, "").replace(/\r\n/g, "\n"),
+		})
+		.toString()
+		.replace(/\(.*\)/g, "")
+		.replace(/\r\n/g, "\n"),
 
-		contentSplitted = content.split("DOCENZA")[2],
 		contentSuggerimenti = content.split("SUGGERIMENTI")[1];
 
 	// REGEX DEFINITIONS
@@ -25,25 +27,26 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 		regexInfo = /.*Insegnamento (.*)\n*Docente\n*(.*)\n*CFU (.*)\n*[^\d]*(\d+)\n*[^\d]*(\d+)/g;
 
 	// QUESTIONS
-	//
-	var questionsBasic = [
+	//  0 - 5    docenza
+	//  6 - 9    insegnamento
+	//  10       interesse
+	//  11 - 19  suggerimenti
+
+	var questions = [
         "GLI ORARI DI SVOLGIMENTO DI LEZIONI, ESERCITAZIONI E ALTRE EVENTUALI ATTIVITÀ DIDATTICHE SONO RISPETTATI",
         "IL DOCENTE STIMOLA/MOTIVA L'INTERESSE VERSO LA DISCIPLINA",
         "IL DOCENTE ESPONE GLI ARGOMENTI IN MODO CHIARO",
-        "LE ATTIVITÀ DIDATTICHE INTEGRATIVE SONO UTILI ALL’APPRENDIMENTO DELLA MATERIA"
-    ];
-
-	var questionSecondPage = [
+        "LE ATTIVITÀ DIDATTICHE INTEGRATIVE SONO UTILI ALL’APPRENDIMENTO DELLA MATERIA",
         "L'INSEGNAMENTO E' STATO SVOLTO IN MANIERA COERENTE CON QUANTO DICHIARATO SUL SITO WEB DEL CORSO DI STUDIO",
         "IL DOCENTE E' REPERIBILE PER CHIARIMENTI E SPIEGAZIONI",
+
         "LE CONOSCENZE PRELIMINARI POSSEDUTE SONO RISULTATE SUFFICIENTI PER LA COMPRENSIONE DEGLI ARGOMENTI PREVISTI NEL PROGRAMMA D'ESAME",
         "IL CARICO DI STUDIO DELL'INSEGNAMENTO È PROPORZIONATO AI CREDITI ASSEGNATI",
         "IL MATERIALE DIDATTICO E' ADEGUATO PER LO STUDIO DELLA MATERIA",
         "LE MODALITA' DI ESAME SONO STATE DEFINITE IN MODO CHIARO",
-        "E' INTERESSATO/A AGLI ARGOMENTI TRATTATI NELL'INSEGNAMENTO"
-    ];
 
-	var questionsSiNo = [
+        "E' INTERESSATO/A AGLI ARGOMENTI TRATTATI NELL'INSEGNAMENTO",
+
         "ALLEGGERIRE IL CARICO DIDATTICO COMPLESSIVO",
         "AUMENTARE L'ATTIVITA' DI SUPPORTO DIDATTICO",
         "FORNIRE PIU' CONOSCENZE DI BASE",
@@ -65,40 +68,47 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 	parsed = {
 		materia: info[1],
 		docente: info[2],
-		cfu: info[3],
-		questionari: info[4]
+		cfu: parseFloat(info[3]),
+		questionari: parseInt(info[4]),
+		domande: {
+			docenza: {},
+			insegnamento: {},
+			interesse: {},
+			suggerimenti: {}
+		}
 	};
 
-	// FIRST QUESTIONS
-	while ((match = regexFirstQuestions.exec(content))) {
-		var question = questionsBasic[i++];
-		parsed[question] = {
-			decisamente_si: match[5],
-			decisamente_no: match[2],
-			piu_si_che_no: match[4],
-			piu_no_che_si: match[3]
-		};
-		regexFirstQuestions.lastIndex++;
-	}
+	// REGEX EXEC
+	var decisamente_si = regexMono(regexDecisamenteSi, content),
+		decisamente_no = regexMono(regexDecisamenteNo, content),
+		piu_si_che_no = regexMono(regexPiuSiCheNo, content),
+		piu_no_che_si = regexMono(regexPiuNoCheSi, content),
+		si = regexMono(regexSi, contentSuggerimenti),
+		no = regexMono(regexNo, contentSuggerimenti);
 
-	// SECOND PAGE QUESTIONS
-	var decisamente_si = regexMono(regexDecisamenteSi, contentSplitted),
-		decisamente_no = regexMono(regexDecisamenteNo, contentSplitted),
-		piu_si_che_no = regexMono(regexPiuSiCheNo, contentSplitted),
-		piu_no_che_si = regexMono(regexPiuNoCheSi, contentSplitted);
+	// ARRAYS MERGING
 
 	for (i = 0; i < decisamente_si.length; i++) {
-		parsed[questionSecondPage[i]] = {
+
+		var key = i < 6 ? "docenza" : i < 10 ? "insegnamento" : "interesse";
+		var question = questions[i];
+
+		parsed.domande[key][question] = {
 			decisamente_si: decisamente_si[i],
 			decisamente_no: decisamente_no[i],
 			piu_si_che_no: piu_si_che_no[i],
 			piu_no_che_si: piu_no_che_si[i]
 		};
+
 	}
 
-	regexCounter(regexNo, "no", contentSuggerimenti, questionsSiNo);
-	regexCounter(regexSi, "si", contentSuggerimenti, questionsSiNo);
+	for (i = 0; i < si.length; i++)
+		parsed.domande.suggerimenti[questions[i + 11]] = {
+			si: si[i],
+			no: no[i]
+		};
 
+	// EXPORT FILE
 	var filename = parsed.materia.toLowerCase().replace(/[ -']+/g, "-") + ".json";
 
 	fs.writeFile(filename, JSON.stringify(parsed, null, 4), function() {
@@ -110,18 +120,8 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 function regexMono(regex, content) {
 	var match, matches = [];
 	while ((match = regex.exec(content))) {
-		matches.push(match[1]);
+		matches.push(parseFloat(match[1].replace(",", ".")));
 		regex.lastIndex++;
 	}
 	return matches;
-}
-
-function regexCounter(regex, key, content, questions) {
-	var match, i = 0;
-	while ((match = regex.exec(content))) {
-		var question = questions[i++];
-		if (!parsed[question]) parsed[question] = {};
-		parsed[question][key] = match[1];
-		regex.lastIndex++;
-	}
 }

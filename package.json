@@ -2,7 +2,7 @@
 	"name": "unipa_surveys",
 	"version": "1.0.0",
 	"description": "convert prof PDF sheet to JSON",
-	"main": "index.js",
+	"main": "unipa_survey.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
