@@ -17,21 +17,20 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 		contentSuggerimenti = content.split("SUGGERIMENTI")[1];
 
 	// REGEX DEFINITIONS
-	var regexDecisamenteSi = /DECISAMENTE SI ([\d,]+)/g,
+	var regexInfo = /.*Insegnamento (.*)\n*(?:Modulo\n*.*\n*)*Docente\n*(.*)\n*CFU (.*)\n*[^\d]*(\d+)\n*[^\d]*(\d+)/g,
+		regexDecisamenteSi = /DECISAMENTE SI ([\d,]+)/g,
 		regexDecisamenteNo = /DECISAMENTE NO ([\d,]+)/g,
 		regexPiuSiCheNo = /PIU' SI CHE NO ([\d,]+)/g,
 		regexPiuNoCheSi = /PIU' NO CHE SI ([\d,]+)/g,
 		regexNo = /NO ([\d,]+)/g,
-		regexSi = /SI ([\d,]+)/g,
-		regexFirstQuestions = /(.*)\n*DECISAMENTE NO ([\d+,]+)\n*PIU' NO CHE SI ([\d+,]+)\n*PIU' SI CHE NO ([\d+,]+)\n*DECISAMENTE SI ([\d+,]+)/g,
-		regexInfo = /.*Insegnamento (.*)\n*(?:Modulo\n*.*\n*)*Docente\n*(.*)\n*CFU (.*)\n*[^\d]*(\d+)\n*[^\d]*(\d+)/g;
+		regexSi = /SI ([\d,]+)/g;
 
-	// QUESTIONS
-	//  0 - 5    docenza
-	//  6 - 9    insegnamento
-	//  10       interesse
-	//  11 - 19  suggerimenti
-
+	/* QUESTIONS
+	  0 - 5    docenza
+	  6 - 9    insegnamento
+	  10       interesse
+	  11 - 19  suggerimenti
+    */
 	var questions = [
         "GLI ORARI DI SVOLGIMENTO DI LEZIONI, ESERCITAZIONI E ALTRE EVENTUALI ATTIVITÀ DIDATTICHE SONO RISPETTATI",
         "IL DOCENTE STIMOLA/MOTIVA L'INTERESSE VERSO LA DISCIPLINA",
@@ -59,10 +58,7 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
     ];
 
 	var info = regexInfo.exec(content),
-		match,
 		i = 0;
-
-	// PARSING
 
 	// INFO
 	parsed = {
@@ -79,12 +75,12 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 	};
 
 	// REGEX EXEC
-	var decisamente_si = regexMono(regexDecisamenteSi, content),
-		decisamente_no = regexMono(regexDecisamenteNo, content),
-		piu_si_che_no = regexMono(regexPiuSiCheNo, content),
-		piu_no_che_si = regexMono(regexPiuNoCheSi, content),
-		si = regexMono(regexSi, contentSuggerimenti),
-		no = regexMono(regexNo, contentSuggerimenti);
+	var decisamente_si = matches(regexDecisamenteSi, content),
+		decisamente_no = matches(regexDecisamenteNo, content),
+		piu_si_che_no = matches(regexPiuSiCheNo, content),
+		piu_no_che_si = matches(regexPiuNoCheSi, content),
+		si = matches(regexSi, contentSuggerimenti),
+		no = matches(regexNo, contentSuggerimenti);
 
 	// ARRAYS MERGING
 
@@ -119,7 +115,7 @@ exec("pdftotext " + path, function(err, stdout, stderr) {
 
 });
 
-function regexMono(regex, content) {
+function matches(regex, content) {
 	var match, matches = [];
 	while ((match = regex.exec(content))) {
 		matches.push(parseFloat(match[1].replace(",", ".")));
